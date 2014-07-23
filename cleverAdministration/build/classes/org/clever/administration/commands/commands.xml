@@ -136,6 +136,11 @@
         <class>org.clever.administration.commands.ReadStorageRulerNodesCommand</class>
     </command>
     
+    <command>
+        <string>sendJob</string>
+        <class>org.clever.administration.commands.SendJobCommand</class>
+    </command>
+    
   <!--
   <command>
     <string>cd</string>

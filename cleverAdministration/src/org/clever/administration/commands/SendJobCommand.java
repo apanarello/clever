@@ -29,6 +29,7 @@ import org.clever.Common.S3tools.S3Tools;
  */
 public class SendJobCommand extends CleverCommand {
 
+    Logger log = Logger.getLogger("SendCommandLogger");
     private final String commandName = "sendJob";
     private final String agentName = "HadoopNamenodeAgent";
     // private final String  agentName = "HadoopJobtrackerAgent";
@@ -47,8 +48,10 @@ public class SendJobCommand extends CleverCommand {
     public void exec(CommandLine commandLine) {
         String[] args = commandLine.getArgs();
         if (args.length <= 5) {
+            System.out.println("Parametri di input "+(args.length-1));
             System.out.println(this.getMenu());
         } else {
+            
             String srcPath = args[1];
             File srcFile = new File(srcPath);
             if (srcFile.exists()) {
@@ -87,7 +90,7 @@ public class SendJobCommand extends CleverCommand {
 
                     ArrayList params = new ArrayList();
                     params.add(fileBuffer);
-                    for (int i = 2; i <= 6; i++) //2=job,3=fileS3, 4=Bucket ,5=user,6=pass
+                    for (int i = 2; i <= 6; i++) //2=job, 4=Bucket, 3=fileS3 ,5=user,6=pass
                     {
                         params.add(args[i]);
                     }
@@ -101,11 +104,17 @@ public class SendJobCommand extends CleverCommand {
                     params.add(size); //8=size S3 file*/
                     //Map<String, Integer> domResources = new HashMap<String, Integer>();
                     //ArrayList listDomains = new ArrayList();
-                    String domResources[][]=null;
-                    for (int i = 8; i < args.length; i = i + 2) { /*Adding couple domains resoures*/
-                        byte j=0;
+                    String domResources[][]=new String [args.length-7][];
+                    for(int k=0;k<args.length-7;k++){
+                    domResources[k]=new String[2];
+                    }
+                    int j=0;
+                    for (int i = 7; i < args.length; i = i + 2) { /*Adding couple domains resoures*/
+                        
                         domResources[j][0]=args[i];
                         domResources[j][1]=args[i+1];
+                         System.out.println(domResources[j][0]);
+                         System.out.println(domResources[j][1]);
                         j++;
                            // listDomains.add(args[i]);
 
@@ -139,6 +148,7 @@ public class SendJobCommand extends CleverCommand {
             System.out.println(ex.getMessage());
         }
         System.out.println("\"" + this.commandName + "\" command successfully launched");
+        
 
     }
 
